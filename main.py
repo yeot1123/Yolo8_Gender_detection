@@ -7,7 +7,7 @@ import cvzone
 
 model = YOLO('best100_v4.pt')
 
-area1 = [(413, 333), (689, 263), (738, 282), (464, 384)]
+area1 = [(413, 333), (689, 263), (773, 283), (464, 384)]
 area2 = [(467, 392), (788, 289), (831, 309), (469, 432)]
 
 def RGB(event, x, y, flags, param):
@@ -77,10 +77,12 @@ while True:
     for bbox1 in bbox1_idx:
         for f in female:
             x3, y3, x4, y4, id1 = bbox1
+            result=cv2.pointPolygonTest(np.array(area1, np.int32), (x4, y4), False)
+
             # ใช้จุดขวาล่างของ bounding box เป็นตำแหน่งจุด
             cxm= x4
             cym= y4
-            if cym<(cy1+offset) and cym>(cy1-offset):
+            if result>=0 :
                 cv2.circle(frame, (cxm, cym), 4, (0, 255, 0), -1)
                 cv2.rectangle(frame, (x3, y3), (x4, y4), (0, 0, 255), 1)
                 cvzone.putTextRect(frame, f'{id1}', (x3, y3), 1, 1)
@@ -91,10 +93,10 @@ while True:
     for bbox2 in bbox2_idx:
         for m in male:
             x5, y5, x6, y6, id2 = bbox2
-            # ใช้จุดขวาล่างของ bounding box เป็นตำแหน่งจุด
+            result1=cv2.pointPolygonTest(np.array(area1, np.int32), (x6, y6), False)
             cxc= x6 
             cyc= y6
-            if cyc <(cy1+offset) and cyc > (cy1-offset):
+            if result1>=0:
                 cv2.circle(frame, (cxc, cyc), 4, (0, 255, 0), -1)
                 cv2.rectangle(frame, (x5, y5), (x6, y6), (0, 0, 255), 1)
                 cvzone.putTextRect(frame, f'{id2}', (x5, y5), 1, 1)
@@ -102,9 +104,9 @@ while True:
                     counter2.append(id2)
               
 
-
+    cv2.polylines(frame,[np.array(area1,np.int32)],True,(255,0,0),2)
             
-    cv2.line(frame,(379,cy1),(824,cy1),(0,0,255),2)
+    #cv2.line(frame,(379,cy1),(824,cy1),(0,0,255),2)
 
     femalelen = (len(counter1))
     malelen = (len(counter2))
