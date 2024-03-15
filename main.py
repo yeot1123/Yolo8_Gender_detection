@@ -5,10 +5,11 @@ from ultralytics import YOLO
 from tracker import *
 import cvzone
 
-model = YOLO('best100_v4.pt')
+model = YOLO('/Users/thanaboon/Desktop/Rmutt/year3.2/AI/project_detect/best_62.pt')
 
 area1 = [(413, 333), (689, 263), (773, 283), (464, 384)]
 area2 = [(467, 392), (788, 289), (831, 309), (469, 432)]
+
 
 def RGB(event, x, y, flags, param):
     if event == cv2.EVENT_MOUSEMOVE:
@@ -29,8 +30,7 @@ tracker1 = Tracker()
 tracker2 = Tracker()
 
 
-cy1=294
-cy2=276
+
 
 counter1 =  []
 counter2= []
@@ -94,6 +94,7 @@ while True:
         for m in male:
             x5, y5, x6, y6, id2 = bbox2
             result1=cv2.pointPolygonTest(np.array(area1, np.int32), (x6, y6), False)
+
             cxc= x6 
             cyc= y6
             if result1>=0:
@@ -102,11 +103,14 @@ while True:
                 cvzone.putTextRect(frame, f'{id2}', (x5, y5), 1, 1)
                 if counter2.count(id2) == 0:
                     counter2.append(id2)
-              
+            
 
     cv2.polylines(frame,[np.array(area1,np.int32)],True,(255,0,0),2)
             
     #cv2.line(frame,(379,cy1),(824,cy1),(0,0,255),2)
+
+    print(counter1)
+    print(counter2)
 
     femalelen = (len(counter1))
     malelen = (len(counter2))
@@ -119,7 +123,7 @@ while True:
 
 
     cv2.imshow("RGB", frame)
-    if cv2.waitKey(0) & 0xFF == 27:
+    if cv2.waitKey(1) & 0xFF == 27:
         break
 
 cap.release()
