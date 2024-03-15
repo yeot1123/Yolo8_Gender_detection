@@ -34,7 +34,7 @@ tracker2 = Tracker()
 
 counter1 =  []
 counter2= []
-offset= 4
+# offset= 4
 
 while True:
     ret, frame = cap.read()
@@ -80,8 +80,8 @@ while True:
             result=cv2.pointPolygonTest(np.array(area1, np.int32), (x4, y4), False)
 
             # ใช้จุดขวาล่างของ bounding box เป็นตำแหน่งจุด
-            cxm= x4
-            cym= y4
+            cxm= int(x3 + x4) // 2
+            cym= int(y3 + y4) // 2
             if result>=0 :
                 cv2.circle(frame, (cxm, cym), 4, (0, 255, 0), -1)
                 cv2.rectangle(frame, (x3, y3), (x4, y4), (0, 0, 255), 1)
@@ -95,8 +95,8 @@ while True:
             x5, y5, x6, y6, id2 = bbox2
             result1=cv2.pointPolygonTest(np.array(area1, np.int32), (x6, y6), False)
 
-            cxc= x6 
-            cyc= y6
+            cxc= int(x5 + x6) // 2
+            cyc= int(y5 + y6) // 2
             if result1>=0:
                 cv2.circle(frame, (cxc, cyc), 4, (0, 255, 0), -1)
                 cv2.rectangle(frame, (x5, y5), (x6, y6), (0, 0, 255), 1)
