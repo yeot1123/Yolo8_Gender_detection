@@ -1,3 +1,10 @@
+<<<<<<< HEAD
 best_62.pt
 best100_v4.pt
 __pycache__/
+=======
+best100_v4.pt
+best_62.pt
+__pycache__/
+.DS_Store
+>>>>>>> 80ebb2c (add .ignore)
