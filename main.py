@@ -52,7 +52,7 @@ while True:
     female = []
     list2 = []
     male = []
-    
+
 
     for index, row in px.iterrows():
         x1 = int(row[0])
@@ -63,17 +63,18 @@ while True:
         c = class_list[d]
 
 
-    
+
         if 'Female' in c :
             list1.append([x1,y1,x2,y2])
             female.append(c)
         elif 'Male' in c:
             list2.append([x1,y1,x2,y2])
             male.append(c)
-            
+
     bbox1_idx = tracker1.update(list1)
     bbox2_idx = tracker2.update(list2)
-    
+
+#################### FeMale ###################
     for bbox1 in bbox1_idx:
         for f in female:
             x3, y3, x4, y4, id1 = bbox1
@@ -88,8 +89,8 @@ while True:
                 cvzone.putTextRect(frame, f'{id1}', (x3, y3), 1, 1)
                 if counter1.count(id1) == 0:
                     counter1.append(id1)
-#################### Male ###################
 
+#################### Male ###################
     for bbox2 in bbox2_idx:
         for m in male:
             x5, y5, x6, y6, id2 = bbox2
@@ -103,10 +104,10 @@ while True:
                 cvzone.putTextRect(frame, f'{id2}', (x5, y5), 1, 1)
                 if counter2.count(id2) == 0:
                     counter2.append(id2)
-            
+
 
     cv2.polylines(frame,[np.array(area1,np.int32)],True,(255,0,0),2)
-            
+
     #cv2.line(frame,(379,cy1),(824,cy1),(0,0,255),2)
 
     print(counter1)
